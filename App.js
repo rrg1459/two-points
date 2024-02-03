@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 
@@ -38,7 +38,12 @@ export default function App() {
       latitudeDelta: region.latitudeDelta,
       longitudeDelta: region.longitudeDelta,
     })
-  }
+  };
+
+  const viewCoordinates = () => {
+    console.log('xxx latitude-->: ', position.latitude);
+    console.log('xxx longitude-->: ', position.longitude);
+  };
 
   return (
     <View style={styles.container}>
@@ -54,8 +59,10 @@ export default function App() {
           }}
           tracksViewChanges={true}>
         </Marker>
-
       </MapView>
+      <View style={styles.pickupButton}>
+        <Button title="Request pickup" onPress={viewCoordinates}/>
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -72,4 +79,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  pickupButton: {
+    position: 'absolute',
+    top: '90%',
+    alignSelf: 'center',
+    width: '80%'
+  }
 });
