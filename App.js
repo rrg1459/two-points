@@ -31,20 +31,32 @@ export default function App() {
     })();
   }, []);
 
+  const onRegionChange = region => {
+    setPosition({
+      latitude: region.latitude,
+      longitude: region.longitude,
+      latitudeDelta: region.latitudeDelta,
+      longitudeDelta: region.longitudeDelta,
+    })
+  }
+
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         initialRegion={position}
-        region={position}></MapView>
+        region={position}
+        onRegionChangeComplete={onRegionChange}>
+        <Marker
+          coordinate={{
+            latitude: position.latitude,
+            longitude: position.longitude
+          }}
+          tracksViewChanges={true}>
+        </Marker>
+
+      </MapView>
       <StatusBar style="auto" />
-      <Marker
-        coordinate={{
-          latitude: position.latitude,
-          longitude: position.longitude
-        }}
-        tracksViewChanges={true}>
-      </Marker>
     </View>
   );
 }
