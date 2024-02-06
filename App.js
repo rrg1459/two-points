@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 
@@ -15,8 +15,10 @@ export default function App() {
   });
 
   useEffect(() => {
+    console.log('xxx KABUMMM 1');
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+    console.log('xxx KABUMMM 2');
+    let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
         return;
@@ -47,19 +49,17 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      {/* <Text>
+        HOLA MUNDO
+      </Text> */}
+
       <MapView
         style={styles.map}
-        initialRegion={position}
         region={position}
         onRegionChangeComplete={onRegionChange}>
-        <Marker
-          coordinate={{
-            latitude: position.latitude,
-            longitude: position.longitude
-          }}
-          tracksViewChanges={true}>
-        </Marker>
+
       </MapView>
+
       <View style={styles.pickupButton}>
         <Button title="Request pickup" onPress={viewCoordinates}/>
       </View>
