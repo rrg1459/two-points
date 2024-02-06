@@ -8,22 +8,21 @@ import * as Location from 'expo-location';
 
 export default function App() {
   const [position, setPosition] = useState({
-    latitude: 10.600757623910244,
-    longitude: -67.02293348859472,
+    latitude: 0,
+    longitude: 0,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
 
   useEffect(() => {
-    console.log('xxx KABUMMM 1');
     (async () => {
-    console.log('xxx KABUMMM 2');
-    let { status } = await Location.requestForegroundPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
         return;
       }
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Highest, maximumAge: 10000 });
+
       setPosition({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -49,19 +48,22 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* <Text>
-        HOLA MUNDO
-      </Text> */}
-
       <MapView
         style={styles.map}
         region={position}
-        onRegionChangeComplete={onRegionChange}>
-
+        onRegionChangeComplete={onRegionChange}
+      >
+        <Marker
+          coordinate={{
+            latitude: position.latitude,
+            longitude: position.longitude
+          }}
+          tracksViewChanges={true}>
+        </Marker>
       </MapView>
 
       <View style={styles.pickupButton}>
-        <Button title="Request pickup" onPress={viewCoordinates}/>
+        <Button title="Request pickup" onPress={viewCoordinates} />
       </View>
       <StatusBar style="auto" />
     </View>
