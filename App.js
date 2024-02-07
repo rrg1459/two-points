@@ -53,6 +53,7 @@ export default function App() {
         region={position}
         onRegionChangeComplete={onRegionChange}
       >
+        {console.log(new Date().toLocaleString().split(' ')[1])}
         <Marker
           coordinate={{
             latitude: position.latitude,
