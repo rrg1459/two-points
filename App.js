@@ -87,6 +87,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  vertical: {
+    justifyContent: "space-around",
+    padding: 10,
+  },
   map: {
     width: '100%',
     height: '100%',
