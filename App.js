@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 
@@ -45,6 +45,15 @@ export default function App() {
     console.log('xxx latitude-->: ', position.latitude);
     console.log('xxx longitude-->: ', position.longitude);
   };
+
+  if (position.latitude === 0) {
+    return (
+      <View style={[styles.container, styles.vertical]}>
+        <Text>LOADING...</Text>
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
