@@ -92,6 +92,10 @@ export default function App() {
             title="destination"
             tracksViewChanges={true}
           >
+            <Image
+              source={{ uri: 'https://cdn1.iconfinder.com/data/icons/business-elements-15/150/Zielflagge-512.png' }}
+              style={styles.markerImage}
+            />
           </Marker>
         }
       </MapView>
