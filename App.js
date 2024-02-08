@@ -66,13 +66,15 @@ export default function App() {
         onRegionChangeComplete={onRegionChange}
       >
         {console.log(new Date().toLocaleString().split(' ')[1])}
-        <Marker
-          coordinate={{
-            latitude: position.latitude,
-            longitude: position.longitude
-          }}
-          tracksViewChanges={true}>
-        </Marker>
+        {origin !== position && destination !== position &&
+          <Marker
+            coordinate={{
+              latitude: position.latitude,
+              longitude: position.longitude
+            }}
+            tracksViewChanges={true}>
+          </Marker>
+        }
         {origin &&
           <Marker
             coordinate={origin}
