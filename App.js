@@ -15,6 +15,7 @@ export default function App() {
   });
 
   const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -73,12 +74,17 @@ export default function App() {
           tracksViewChanges={true}>
         </Marker>
       </MapView>
-      {!origin &&
+      {!origin && !destination &&
         <View style={styles.seeCoordinates}>
           <Button title="mark origin" onPress={() => setOrigin(position)} />
         </View>
       }
-
+      {origin &&
+        <View style={styles.seeCoordinates}>
+          <Button title="mark origin" onPress={() => setOrigin(position)} />
+          <Button title="mark destination" onPress={() => setDestination(position)} />
+        </View>
+      }
       <StatusBar style="auto" />
     </View>
   );
