@@ -81,6 +81,14 @@ export default function App() {
           >
           </Marker>
         }
+        {destination &&
+          <Marker
+            coordinate={destination}
+            title="destination"
+            tracksViewChanges={true}
+          >
+          </Marker>
+        }
       </MapView>
       {!origin && !destination &&
         <View style={styles.seeCoordinates}>
