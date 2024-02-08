@@ -14,6 +14,8 @@ export default function App() {
     longitudeDelta: 0.0421,
   });
 
+  const [origin, setOrigin] = useState(null);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -71,10 +73,12 @@ export default function App() {
           tracksViewChanges={true}>
         </Marker>
       </MapView>
+      {!origin &&
+        <View style={styles.seeCoordinates}>
+          <Button title="mark origin" onPress={() => setOrigin(position)} />
+        </View>
+      }
 
-      <View style={styles.pickupButton}>
-        <Button title="mark origin" onPress={viewCoordinates} />
-      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -100,5 +104,12 @@ const styles = StyleSheet.create({
     top: '90%',
     alignSelf: 'center',
     width: '80%'
-  }
+  },
+  seeCoordinates: {
+    position: "absolute",
+    top: "90%",
+    alignSelf: "center",
+    flexDirection: "row",
+    gap: 4,
+  },
 });
