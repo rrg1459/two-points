@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, Image, StyleSheet, Text, View } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 
@@ -79,6 +79,11 @@ export default function App() {
             title="origin"
             tracksViewChanges={true}
           >
+            <Image
+              // source={{uri: 'https://reactnative.dev/docs/assets/p_cat2.png'}}
+              source={{ uri: 'https://t4.ftcdn.net/jpg/01/36/70/67/240_F_136706734_KWhNBhLvY5XTlZVocpxFQK1FfKNOYbMj.jpg' }}
+              style={styles.markerImage}
+            />
           </Marker>
         }
         {destination &&
@@ -133,5 +138,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "row",
     gap: 4,
+  },
+  markerImage: {
+    width: 25,
+    height: 25
   },
 });
