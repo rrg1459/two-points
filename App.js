@@ -73,7 +73,7 @@ export default function App() {
       </MapView>
 
       <View style={styles.pickupButton}>
-        <Button title="Request pickup" onPress={viewCoordinates} />
+        <Button title="mark origin" onPress={viewCoordinates} />
       </View>
       <StatusBar style="auto" />
     </View>
