@@ -7,6 +7,9 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 export default function App() {
+
+  console.log('xxx process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY-->: ', process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY);
+
   const [position, setPosition] = useState({
     latitude: 0,
     longitude: 0,
