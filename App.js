@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import { Button, StyleSheet, View, Text, Modal, Image, Pressable, ActivityIndicator } from "react-native";
+
+import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
-import MapView, { Marker } from 'react-native-maps';
-
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 import axios from "axios";
 
 export default function App() {
@@ -23,12 +23,14 @@ export default function App() {
   const [destination, setDestination] = useState(null);
   const [walking, setWalking] = useState(true);
   const [modalVisibleDistance, setModalVisibleDistance] = useState(false);
+  const [modalVisibleNoRoutes, setModalVisibleNoRoutes] = useState(false);
+  const [currentDistance, setCurrentDistance] = useState(null);
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
         return;
       }
       let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Highest, maximumAge: 10000 });
@@ -51,18 +53,13 @@ export default function App() {
     }
   }, [origin, destination]);
 
-  const onRegionChange = region => {
+  const onRegionChange = (region) => {
     setPosition({
       latitude: region.latitude,
       longitude: region.longitude,
       latitudeDelta: region.latitudeDelta,
       longitudeDelta: region.longitudeDelta,
-    })
-  };
-
-  const viewCoordinates = () => {
-    console.log('xxx latitude-->: ', position.latitude);
-    console.log('xxx longitude-->: ', position.longitude);
+    });
   };
 
   const handleMode = () => setWalking(!walking);
@@ -74,8 +71,15 @@ export default function App() {
 
     try {
       const response = await axios.get(url);
-      const distanceText = response.data.routes[0].legs[0].distance.text;
-      return distanceText;
+
+      if (response.data.routes.length) {
+        const distanceText = response.data.routes[0].legs[0].distance.text;
+        return distanceText;
+      } else {
+        setModalVisibleNoRoutes(true)
+        return
+      }
+
     } catch (error) {
       console.error("Error on distance:", error);
     }
@@ -100,13 +104,20 @@ export default function App() {
           </View>
         </View>
       </Modal>
+      <Modal visible={modalVisibleNoRoutes} animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.padding}>No routes for this origin y/o destination</Text>
+            <Button title="Close" onPress={() => setModalVisibleNoRoutes(false)} />
+          </View>
+        </View>
+      </Modal>
       <MapView
         style={styles.map}
         region={position}
         onRegionChangeComplete={onRegionChange}
       >
         {console.log(new Date().toLocaleString().split(' ')[1])}
-        {console.log('xxx GOOGLE_MAPS_APIKEY-->: ', GOOGLE_MAPS_APIKEY)}
         <MapViewDirections
           origin={origin}
           destination={destination}
@@ -115,6 +126,7 @@ export default function App() {
           strokeColor={seeColor}
           strokeWidth={3}
         />
+
         {origin !== position && destination !== position &&
           <Marker
             coordinate={{
@@ -124,6 +136,7 @@ export default function App() {
             tracksViewChanges={true}>
           </Marker>
         }
+
         {origin &&
           <Marker
             coordinate={origin}
@@ -179,17 +192,17 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   vertical: {
     justifyContent: "space-around",
     padding: 10,
   },
   map: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   green: {
     backgroundColor: "green",
@@ -200,11 +213,20 @@ const styles = StyleSheet.create({
   padding: {
     paddingBottom: 18,
   },
-  pickupButton: {
-    position: 'absolute',
-    top: '90%',
-    alignSelf: 'center',
-    width: '80%'
+  button: {
+    position: "absolute",
+    top: "5%",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+    elevation: 3,
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
   },
   seeDistance: {
     position: "absolute",
