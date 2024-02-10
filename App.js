@@ -21,6 +21,7 @@ export default function App() {
 
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [modalVisibleDistance, setModalVisibleDistance] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -145,6 +146,11 @@ export default function App() {
         <View style={styles.seeCoordinates}>
           <Button title="mark origin" onPress={() => setOrigin(position)} />
           <Button title="mark destination" onPress={() => setDestination(position)} />
+        </View>
+      }
+      {origin && destination && origin !== destination && currentDistance &&
+        <View style={styles.seeDistance}>
+          <Button title="see distance" onPress={() => setModalVisibleDistance(true)} />
         </View>
       }
       <StatusBar style="auto" />
