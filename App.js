@@ -6,6 +6,7 @@ import MapViewDirections from "react-native-maps-directions";
 import MapView, { Marker } from 'react-native-maps';
 
 import * as Location from 'expo-location';
+import axios from "axios";
 
 export default function App() {
 
@@ -53,6 +54,18 @@ export default function App() {
     console.log('xxx longitude-->: ', position.longitude);
   };
 
+  async function getDistance() {
+    const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&key=${GOOGLE_MAPS_APIKEY}`;
+
+    try {
+      const response = await axios.get(url);
+      const distanceText = response.data.routes[0].legs[0].distance.text;
+      return distanceText;
+    } catch (error) {
+      console.error("Error on distance:", error);
+    }
+  }
+
   if (position.latitude === 0) {
     return (
       <View style={[styles.container, styles.vertical]}>
@@ -70,7 +83,15 @@ export default function App() {
         onRegionChangeComplete={onRegionChange}
       >
         {console.log(new Date().toLocaleString().split(' ')[1])}
-
+        {console.log('xxx GOOGLE_MAPS_APIKEY-->: ', GOOGLE_MAPS_APIKEY)}
+        <MapViewDirections
+          origin={origin}
+          destination={destination}
+          mode="WALKING"
+          apikey={GOOGLE_MAPS_APIKEY}
+          strokeColor="hotpink"
+          strokeWidth={3}
+        />
         {origin !== position && destination !== position &&
           <Marker
             coordinate={{
