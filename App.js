@@ -110,7 +110,7 @@ export default function App() {
         <MapViewDirections
           origin={origin}
           destination={destination}
-          mode="WALKING"
+          mode={seeMode.toUpperCase()}
           apikey={GOOGLE_MAPS_APIKEY}
           strokeColor="hotpink"
           strokeWidth={3}
