@@ -66,6 +66,8 @@ export default function App() {
   };
 
   const handleMode = () => setWalking(!walking);
+  const seeMode = walking ? "Walking" : "Driving";
+  const seeColor = walking ? "hotpink" : "red";
 
   async function getDistance() {
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&key=${GOOGLE_MAPS_APIKEY}`;
