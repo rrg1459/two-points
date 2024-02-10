@@ -112,7 +112,7 @@ export default function App() {
           destination={destination}
           mode={seeMode.toUpperCase()}
           apikey={GOOGLE_MAPS_APIKEY}
-          strokeColor="hotpink"
+          strokeColor={seeColor}
           strokeWidth={3}
         />
         {origin !== position && destination !== position &&
