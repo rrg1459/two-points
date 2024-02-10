@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, Image, Modal, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import MapViewDirections from "react-native-maps-directions";
 
 import MapView, { Marker } from 'react-native-maps';
@@ -21,6 +21,7 @@ export default function App() {
 
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [walking, setWalking] = useState(true);
   const [modalVisibleDistance, setModalVisibleDistance] = useState(false);
 
   useEffect(() => {
@@ -63,6 +64,8 @@ export default function App() {
     console.log('xxx latitude-->: ', position.latitude);
     console.log('xxx longitude-->: ', position.longitude);
   };
+
+  const handleMode = () => setWalking(!walking);
 
   async function getDistance() {
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&key=${GOOGLE_MAPS_APIKEY}`;
@@ -157,9 +160,14 @@ export default function App() {
         </View>
       }
       {origin && destination && origin !== destination && currentDistance &&
-        <View style={styles.seeDistance}>
-          <Button title="see distance" onPress={() => setModalVisibleDistance(true)} />
-        </View>
+        <>
+          <Pressable style={[styles.button, walking ? styles.green : styles.blue]} onPress={handleMode}>
+            <Text style={styles.text}>{seeMode}</Text>
+          </Pressable>
+          <View style={styles.seeDistance}>
+            <Button title="see distance" onPress={() => setModalVisibleDistance(true)} />
+          </View>
+        </>
       }
       <StatusBar style="auto" />
     </View>
@@ -180,6 +188,12 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%',
+  },
+  green: {
+    backgroundColor: "green",
+  },
+  blue: {
+    backgroundColor: "blue",
   },
   padding: {
     paddingBottom: 18,
