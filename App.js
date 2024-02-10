@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, Image, Modal, StyleSheet, Text, View } from 'react-native';
 import MapViewDirections from "react-native-maps-directions";
 
 import MapView, { Marker } from 'react-native-maps';
@@ -87,6 +87,14 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Modal visible={modalVisibleDistance} animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.padding}>{`Distance is ${currentDistance}`}</Text>
+            <Button title="Close" onPress={() => setModalVisibleDistance(false)} />
+          </View>
+        </View>
+      </Modal>
       <MapView
         style={styles.map}
         region={position}
