@@ -181,6 +181,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  padding: {
+    paddingBottom: 18,
+  },
   pickupButton: {
     position: 'absolute',
     top: '90%',
@@ -198,6 +201,18 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "row",
     gap: 4,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
   },
   markerImage: {
     width: 25,
