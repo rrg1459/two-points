@@ -179,6 +179,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '80%'
   },
+  seeDistance: {
+    position: "absolute",
+    top: "85%",
+    alignSelf: "center",
+  },
   seeCoordinates: {
     position: "absolute",
     top: "90%",
