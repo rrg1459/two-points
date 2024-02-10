@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, Button, Image, StyleSheet, Text, View } from 'react-native';
+import MapViewDirections from "react-native-maps-directions";
 
 import MapView, { Marker } from 'react-native-maps';
 
@@ -67,6 +68,7 @@ export default function App() {
         onRegionChangeComplete={onRegionChange}
       >
         {console.log(new Date().toLocaleString().split(' ')[1])}
+
         {origin !== position && destination !== position &&
           <Marker
             coordinate={{
