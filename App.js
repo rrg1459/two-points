@@ -40,6 +40,15 @@ export default function App() {
     })();
   }, []);
 
+  useEffect(() => {
+    if (origin && destination) {
+      (async () => {
+        let distance = await getDistance();
+        setCurrentDistance(distance);
+      })();
+    }
+  }, [origin, destination]);
+
   const onRegionChange = region => {
     setPosition({
       latitude: region.latitude,
