@@ -67,11 +67,11 @@ export default function App() {
   const seeColor = walking ? "hotpink" : "red";
 
   async function getDistance() {
+
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&key=${GOOGLE_MAPS_APIKEY}`;
 
     try {
       const response = await axios.get(url);
-
       if (response.data.routes.length) {
         const distanceText = response.data.routes[0].legs[0].distance.text;
         return distanceText;
